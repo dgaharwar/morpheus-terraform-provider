@@ -28,7 +28,7 @@ variable "prefix" {
   default     = "tf-example"
 }
 
-data "morpheus_price_set" "tf_example_service_plan"{
+data "morpheus_price_set" "tf_example_price_set"{
   name = "Default Price Set"
 }
 
