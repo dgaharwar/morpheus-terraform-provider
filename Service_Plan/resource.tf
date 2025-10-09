@@ -22,21 +22,28 @@ variable "morpheus_access_token" {
   type        = string
 }
 
+variable "prefix" {
+  description = "The prefix that will be applied to the plan name"
+  type        = string
+  default     = "tf-example"
+}
+
 data "morpheus_price_set" "tf_example_service_plan"{
   name = "Default Price Set"
 }
 
-resource "morpheus_service_plan" "main" {
-  name = "terraform-test-sp"
-  code = "terraform-test-sp1"
-  display_order = 0
-  provision_type = "vmware"
-  max_cores = 1
+resource "morpheus_service_plan" "tf_example_service_plan" {
+  for_each = { for row in csvdecode(file("${path.module}/_plans.csv")) : row.name => row }
+  name = "${var.prefix}${each.value.name}"
+  code = lower(trimsuffix(replace("${var.prefix}${each.value.name}", "/[\\W]+/", "-"), "-"))
+  display_order = each.value.display_order
+  provision_type = each.value.provision_type
+  max_cores = each.value.core_nb
   custom_cores = false
-  max_memory = 1 * 1024 * 1024 * 1024
+  max_memory = each.value.memory_gb * 1024 * 1024 * 1024
   memory_size_type = "mb"
   custom_memory = false
-  max_storage = 40 * 1024 * 1024 * 1024
+  max_storage = each.value.disk_gb * 1024 * 1024 * 1024
   storage_size_type = "gb"
   customize_root_volume = false
   customize_extra_volumes = true
