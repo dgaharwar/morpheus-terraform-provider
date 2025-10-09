@@ -22,13 +22,18 @@ variable "morpheus_access_token" {
   type        = string
 }
 
+variable "service_plan" {
+  description = "The prefix to be added to the plan name"
+  type        = string
+}
+
 data "morpheus_price_set" "tf_example_price_set"{
   name = "Default Price Set"
 }
 
 resource "morpheus_service_plan" "tf_example_service_plan" {
-  name = "tf-example-sp"
-  code = "tf-example-sp1"
+  name = var.service_plan
+  code = var.service_plan
   display_order = 0
   provision_type = "vmware"
   max_cores = 1
