@@ -1,0 +1,13 @@
+display_order,name,core_nb,memory_gb,disk_gb,priceset,provision_type
+20,vm-1vcpu-1gb,1,1,40,"Default Price Set",vmware
+21,vm-1vcpu-2gb,1,2,40,"Default Price Set",vmware
+22,vm-1vcpu-4gb,1,4,60,"Default Price Set",vmware
+23,vm-2vcpu-2gb,2,2,40,"Default Price Set",vmware
+24,vm-2vcpu-4gb,2,4,60,"Default Price Set",vmware
+25,vm-2vcpu-8gb,2,8,80,"Default Price Set",vmware
+26,vm-4vcpu-8gb,4,8,100,"Default Price Set",vmware
+27,vm-4vcpu-16gb,4,16,120,"Default Price Set",vmware
+28,vm-8vcpu-16gb,8,16,150,"Default Price Set",vmware
+29,vm-8vcpu-32gb,8,32,200,"Default Price Set",vmware
+30,vm-16vcpu-32gb,16,32,300,"Default Price Set",vmware
+31,vm-16vcpu-64gb,16,64,400,"Default Price Set",vmware
