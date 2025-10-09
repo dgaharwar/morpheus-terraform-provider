@@ -38,6 +38,7 @@ resource "morpheus_service_plan" "tf_example_service_plan" {
   provision_type = "vmware"
   max_cores = 1
   custom_cores = false
+  cores_per_socket = 1
   max_memory = 1 * 1024 * 1024 * 1024
   memory_size_type = "mb"
   custom_memory = false
