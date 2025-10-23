@@ -42,7 +42,7 @@ data "morpheus_resource_pool" "vsphere_resource_pool" {
 }
 
 data "morpheus_cloud_folder" "vsphere_folder" {
-  name     = "/"
+  name     = "/.Templates/dg-test-demo"
   cloud_id = data.morpheus_cloud.morpheus_vsphere.id
 }
 
