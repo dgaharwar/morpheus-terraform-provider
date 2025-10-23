@@ -28,21 +28,57 @@ variable "instance_name" {
   default     = "tfvsphere"
 }
 
+data "morpheus_group" "morpheus_lab" {
+  name = "All Groups"
+}
+
+data "morpheus_cloud" "morpheus_vsphere" {
+  name = "Demo"
+}
+
+data "morpheus_resource_pool" "vsphere_resource_pool" {
+  name     = "Demo"
+  cloud_id = data.morpheus_cloud.morpheus_vsphere.id
+}
+
+data "morpheus_cloud_folder" "vsphere_folder" {
+  name     = "/"
+  cloud_id = data.morpheus_cloud.morpheus_vsphere.id
+}
+
+data "morpheus_instance_type" "ubuntu" {
+  name = "Ubuntu"
+}
+
+data "morpheus_instance_layout" "ubuntu" {
+  name    = "VMware VM"
+  version = "22.04"
+}
+
+data "morpheus_network" "vmnetwork" {
+  name = "VLAN0002 - Internal Server 2"
+}
+
+data "morpheus_plan" "vmware" {
+  name           = "1 CPU, 4GB Memory"
+  provision_type = "vmware"
+}
+
 resource "morpheus_vsphere_instance" "tf_example_vsphere_instance" {
   name               = var.instance_name
   description        = "Terraform instance example"
-  cloud_id           = 1
-  group_id           = 26
-  instance_type_id   = 9
-  instance_layout_id = 1236
-  plan_id            = 374
+  cloud_id           = data.morpheus_cloud.morpheus_vsphere.id
+  group_id           = data.morpheus_group.morpheus_lab.id
+  instance_type_id   = data.morpheus_instance_type.ubuntu.id
+  instance_layout_id = data.morpheus_instance_layout.ubuntu.id
+  plan_id            = data.morpheus_plan.vmware.id
   environment        = "dev"
-  resource_pool_id   = 857
-  folder_id          = 624
+  resource_pool_id   = data.morpheus_resource_pool.vsphere_resource_pool.id
+  folder_id          = data.morpheus_cloud_folder.vsphere_folder.id
   labels             = ["demo", "terraform"]
 
   interfaces {
-    network_id = 2937
+    network_id = data.morpheus_network.vmnetwork.id
   }
 
   tags = {
@@ -55,6 +91,11 @@ resource "morpheus_vsphere_instance" "tf_example_vsphere_instance" {
     export = true
     masked = true
   }
+
+  custom_options = {
+    vsphereDatacenter = "denver"
+  }
+}
 
   custom_options = {
     vsphereDatacenter = "denver"
