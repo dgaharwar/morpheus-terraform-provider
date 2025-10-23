@@ -96,8 +96,3 @@ resource "morpheus_vsphere_instance" "tf_example_vsphere_instance" {
     vsphereDatacenter = "denver"
   }
 }
-
-  custom_options = {
-    vsphereDatacenter = "denver"
-  }
-}
