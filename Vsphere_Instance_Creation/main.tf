@@ -29,7 +29,7 @@ variable "instance_name" {
 }
 
 data "morpheus_group" "morpheus_lab" {
-  name = "All Groups"
+  name = "All Clouds"
 }
 
 data "morpheus_cloud" "morpheus_vsphere" {
